@@ -1,0 +1,34 @@
+#  Ignore Python compiled files
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+
+# Ignore virtual environment
+.env/
+env/
+config.json
+
+# Ignore log files
+*.log
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore large Ai model files (optional)
+models/*.pkl
+models/*.h5
+models/*.pt
+models/*.onnx
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_chekpoints/
+
+# Ignore dependency files that can be regenerated
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Ignore IDE/editor-specific files
+.vscode/
+.idea/
