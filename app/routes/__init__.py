@@ -1,4 +1,6 @@
 from flask import Blueprint
 
-# List of blueprints
-blueprints = []
+routes_bp = Blueprint('routes',__name__)
+
+# Import route modules
+from app.routes import nasa_routes
