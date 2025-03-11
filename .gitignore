@@ -32,3 +32,6 @@ pip-delete-this-directory.txt
 # Ignore IDE/editor-specific files
 .vscode/
 .idea/
+
+# data generated
+data/

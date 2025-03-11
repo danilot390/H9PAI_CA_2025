@@ -13,8 +13,8 @@ def fetch_nasa(date_str=date.today()):
     Args:
         date_str: Date for fetch data given or generated.
     Returns:
-        data: JSON file that contains date, explanation, title, url, and media type.
-        error: 
+        data: JSON file that contains date, explanation, title, url, and media type. -> valid
+        error: JSON error message. -> invalid
     """
     api_key = get_api_key()
 
@@ -29,6 +29,15 @@ def fetch_nasa(date_str=date.today()):
 
 @bp.route('/nasa/fetch/<start_date>/<end_date>',methods=['GET'])
 def list_nasa(start_date, end_date):
+    """
+    List of the data fetch from NASA's api for a given range of date, and also save in a .JSON file.
+    Args:
+        start_date: Date that starts the list of data
+        end_date: Date that ends the list of data
+    Returns:
+        data: JSON file that contains date, explanation, title, url, and media type. -> valid
+        error: JSON error message. -> invalid
+    """
     # Check if the dates are valid for correct functionality
     check_date = check_nasa_dates(start_date, end_date)
     if check_date != True:
