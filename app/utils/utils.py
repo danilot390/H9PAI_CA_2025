@@ -1,4 +1,5 @@
-import os, requests
+import os, requests, json
+import datetime
 from flask import jsonify
 
 def get_api_key():
@@ -32,4 +33,59 @@ def get_api_key():
     except requests.exceptions.RequestException as e:
         return jsonify({'error': f'Unexpected error: {e}.'}), 400
     return api_key
+def check_nasa_range_date(date_str):
+    """
+    Check if the date are into the range of NASA API's database
+    Args:
+        date-> date
+    Return:
+        Boolean -> True for valid and False for invalid.
+    """
+    today = datetime.date.today()
+    start_pictures = datetime.date(1995,5,16)
+    date_ = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+    if start_pictures< date_>today:
+        return False
+    return True
 
+def check_nasa_dates(start_date, end_date):
+    """
+    Check if the range of the dates are into the range, and also the correct order of the adtes for query.
+    Args:
+        start_date, end_date -> date
+    Return:
+        Boolean True -> valid
+        JSON error -> invalid
+    """
+    if check_nasa_range_date(start_date)==False or check_nasa_range_date(end_date)==False:
+        return jsonify({'error': f'One or both of the dates are out of the range. Please choose dates again.'})
+    if end_date < start_date:
+        return jsonify({'error': 'The start date is has to be before the end date. Please correct the order of the dates.'})
+    return True
+
+def save_json_data(new_data, filename):
+    """
+    Save data in a specific .JSON file without overwriting in specific filename.
+    Args:
+        new_data: JSON data to append.
+        filename: path to the file.
+    """
+    try:
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+        if os.path.exists(filename):
+            with open(filename, 'r', encoding='utf-8')as file:
+                try:
+                    data = json.load(file)
+                except json.JSONDecodeError:
+                    data = []
+        else:
+            data = []
+
+        data.append(new_data)
+
+        with open(filename, 'w', encoding='utf-8') as file:
+            json.dump(data, file, indent=4)
+    
+    except IOError as e:
+        print (f'Error writing to file {filename}:{e}')
