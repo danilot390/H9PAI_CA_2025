@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask AI Project</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Flask CA Project for Programming in AI</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+
+        <ul class="navbar-nav">
+            <li class='nav-item'><a class='nav-link' href="#">NASA PICTURE OF THE DAY</a></li>
+            <ul>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('routes.fetch_nasa') }}">Day picture details</a></li>
+                <li class="nav-item">
+                    <form id="nasaRangeForm" class="d-flex gap-2">
+                        <input type="date" id="start_date" class="form-control" required>
+                        <input type="date" id="end_date" class="form-control" required>
+                        <button type="submit" class="btn btn-sm btn-primary">Fetch Range</button>
+                    </form>
+                </li>
+            </ul>
+        </ul>
+
+        <ul class="navbar-nav">
+            <li class='nav-item'><a class='nav-link' href="#">JSON OPERATIONS</a></li>
+            <ul>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('routes.json_read_data') }}">Read JSON file (default: 'data/nasa_data.json')</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('routes.json_analyze_data') }}">Analyze APOD JSON file</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('routes.json_csv_file') }}">Export APOD JSON file as CSV</a></li>
+            </ul>
+        </ul>
+
+        <ul class="navbar-nav">
+            <li class='nav-item'><a class='nav-link' href="#">NUMPY BASICS</a></li>
+            <ul>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('routes.numpy_gen_array') }}">NumPy 2D Array</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('routes.numpy_handle_array') }}">Array Manipulation</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('routes.numpy_stats_array') }}">Statistics of the Array</a></li>
+            </ul>
+        </ul>
+
+        <ul class="navbar-nav">
+            <li class='nav-item'><a class='nav-link' href="#">PANDAS DATAFRAME</a></li>
+            <ul>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('routes.pandas_iris_summary') }}">Summary of Iris Dataset</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('routes.pandas_iris_corrected') }}">Correction of Iris Dataset</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('routes.pandas_new_iris_feature') }}">Addition of Features in Iris Dataset</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('routes.pandas_iris_correlation') }}">Pairwise Feature Correlation (Iris Dataset)</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('routes.pandas_iris_scatter') }}">Iris Scatter Plot Graph</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('routes.pandas_iris_pairplot') }}">Iris Pair Plot Graph</a></li>
+            </ul>
+        </ul>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <p>Made by <strong>Danilo Tito</strong> | © <span id="year"></span> Flask AI Project at NCI Master in AI</p>
+        <div class="social-icons mt-2">
+            <a href="https://www.linkedin.com/in/fsd-tito-sdf" target="_blank" class="text-white mx-2">
+                <i class="bi bi-linkedin" style="font-size: 1.5rem;"></i>
+            </a>
+            <a href="https://github.com/sdf/sdfsdf" target="_blank" class="text-white mx-2">
+                <i class="bi bi-github" style="font-size: 1.5rem;"></i>
+            </a>
+        </div>
+    </footer>
+    
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        document.getElementById("nasaRangeForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let startDate = document.getElementById("start_date").value;
+            let endDate = document.getElementById("end_date").value;
+            
+            if (startDate && endDate) {
+                let url = `{{ url_for('routes.fetch_nasa_range', start_date='__START__', end_date='__END__') }}` 
+                    .replace('__START__', startDate)
+                    .replace('__END__', endDate);
+                
+                window.location.href = url;
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

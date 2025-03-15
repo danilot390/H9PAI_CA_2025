@@ -27,7 +27,7 @@ def fetch_nasa(date_str=date.today()):
     data = get_apod_data(api_key, date_str)
     return jsonify(data), 200 
 
-@bp.route('/nasa/fetch/<start_date>/<end_date>',methods=['GET'])
+@bp.route('/nasa/fetch/<start_date>/<end_date>',methods=['GET'], endpoint='fetch_nasa_range')
 def list_nasa(start_date, end_date):
     """
     List of the data fetch from NASA's api for a given range of date, and also save in a .JSON file.

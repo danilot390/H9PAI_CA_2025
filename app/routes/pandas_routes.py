@@ -19,7 +19,7 @@ def correct_iris_data():
     except:
         return jsonify({'error':'Unexpected error, try later please.'}),400
 
-@bp.route('/pandas/new_features', methods=['GET'], endpoint='panadas_new_irirs_feature')
+@bp.route('/pandas/new_features', methods=['GET'], endpoint='pandas_new_iris_feature')
 def add_irirs_features():
     new_features = add_features()
 

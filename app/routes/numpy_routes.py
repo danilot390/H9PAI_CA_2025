@@ -13,7 +13,7 @@ def handle_numpy_array():
     array_tasks = handle_array(array)
     return jsonify(array_tasks.tolist()),200
 
-@bp.route('/numpy/stats_array', methods=['GET'], endpoint='nunmpy_stats_array')
+@bp.route('/numpy/stats_array', methods=['GET'], endpoint='numpy_stats_array')
 def get_array_stats():
     array = generate_2d_array()
     stats = statistics_array(array)

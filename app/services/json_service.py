@@ -26,14 +26,17 @@ def read_apod_data(file_path='data/nasa_data.json', show_terminal=True):
             try:
                 if show_terminal :
                     for item in data:
-                        print(f'Date: {item['date']} - Title: {item['title']}')
+                        try:
+                            print(f'Error: {item['error']}')
+                        except:
+                            print(f'Date: {item['date']} - Title: {item['title']}')
             
             except Exception as e:
-                e_message = 'Wrong data: {e}'
+                e_message = f'Wrong data: {e}'
                 print(e_message) 
                 return jsonify({'error':e_message}),400
             
-            return data
+        return data
     
     except FileNotFoundError as e:
         e_message = f'File not found: {e}'
