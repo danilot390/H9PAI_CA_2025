@@ -2,6 +2,7 @@ import os, requests, json
 import datetime
 from flask import jsonify
 
+
 def get_api_key():
     """
     Function that retrieve NASA API KEY & URL from environment variables and check if it works.
@@ -89,3 +90,33 @@ def save_json_data(new_data, filename):
     
     except IOError as e:
         print (f'Error writing to file {filename}:{e}')
+
+def load_csv(csv_path='data/iris.csv'):
+    """
+    Load csv dataset(iris.csv for default).
+    Return:
+        Pandas Dataframe of the csv file.
+    """
+    import pandas as pd
+    return pd.read_csv(csv_path)
+
+def load_corrected_iris(correct_df_path= 'data/iris_corrected.csv'):
+    """
+    Load the corrected & updated Iris Dataset, and updated & save as CSV file if is missing or does not updated correctly.
+    Return:
+        dict that contains corrected Iris Dataset.
+    """
+    try:
+        df = load_csv(correct_df_path)
+        df['Sepal.Ratio']
+    except:
+        df = load_csv()
+        df.loc[34] = [4.9, 3.1, 1.5, 0.2, 'setosa']
+        df.loc[37] = [4.9, 3.6, 1.4, 0.1, 'setosa']
+
+        df['Petal.Ratio'] = df['Petal.Length']/df['Petal.Width']
+        df['Sepal.Ratio'] = df['Sepal.Length']/df['Sepal.Width']
+
+        df.to_csv(correct_df_path, index=False)
+    
+    return df
